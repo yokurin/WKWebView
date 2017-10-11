@@ -65,7 +65,7 @@ class Benchmarks {
             // print("Benchmark: \(key), Elasped time: \(formatedElapsed)(s)")
             
             let url = self.key.characters.count > 36 ?
-                "\(self.key.substring(to: self.key.index(self.key.startIndex, offsetBy: 35)))..." : self.key
+                "\(self.key.prefix(35))..." : self.key
             return "URL: \(url)\nElasped time: \(formatedElapsed)(s)"
         }
         
