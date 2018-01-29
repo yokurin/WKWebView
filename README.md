@@ -10,6 +10,7 @@ You can check pure WKWebView and loading time of website.
 
 
 ## Branches
+- develop
 - feature/xcode8
 - feature/xcode9
 
@@ -18,8 +19,8 @@ You can check pure WKWebView and loading time of website.
     - Xcode8.3.3
     - Swift3
 
-- feature/xcode9
-    - Xcode9.0
+- develop or feature/xcode9
+    - Xcode9
     - Swift4
 
 ## Install
