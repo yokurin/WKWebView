@@ -83,6 +83,18 @@ class ViewController: UIViewController {
 // MARK: WebViewDelegate
 extension ViewController: WKUIDelegate, WKNavigationDelegate {
     
+    func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+        guard let url = navigationAction.request.url else {
+            return nil
+        }
+        
+        guard let targetFrame = navigationAction.targetFrame, targetFrame.isMainFrame else {
+            webView.load(URLRequest(url: url))
+            return nil
+        }
+        return nil
+    }
+    
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         Benchmarks.shared.start(key: webView.url?.absoluteString ?? "")
         indicatorView.startAnimating()
