@@ -29,7 +29,7 @@ class Benchmarks {
     func finish(key: String) -> String? {
         guard !key.isEmpty else { return nil }
         guard let index = self.keys.index(of: key) else { return "Not Match loading Start URL and loading End URL. Plase reload this site. Probably you were redirected." }
-        let time = self.benchmarks[index].finishWithString()
+        let time = self.benchmarks[index].finish()
         
         self.keys.remove(at: index)
         self.benchmarks.remove(at: index)
@@ -53,13 +53,13 @@ class Benchmarks {
         }
         
         // 処理終了
-        func finish() {
-            let elapsed = Date().timeIntervalSince(self.startTime) as Double
-            let formatedElapsed = String(format: "%.3f", elapsed)
-            print("Benchmark: \(key), Elasped time: \(formatedElapsed)(s)")
-        }
-        
-        func finishWithString() -> String {
+//        func finish() {
+//            let elapsed = Date().timeIntervalSince(self.startTime) as Double
+//            let formatedElapsed = String(format: "%.3f", elapsed)
+//            print("Benchmark: \(key), Elasped time: \(formatedElapsed)(s)")
+//        }
+
+        func finish() -> String {
             let elapsed = Date().timeIntervalSince(self.startTime) as Double
             let formatedElapsed = String(format: "%.3f", elapsed)
             // print("Benchmark: \(key), Elasped time: \(formatedElapsed)(s)")
@@ -73,7 +73,7 @@ class Benchmarks {
         class func measure(key: String, block: () -> ()) {
             let benchmark = Benchmark(key)
             block()
-            benchmark.finish()
+            print(benchmark.finish())
         }
     }
 }

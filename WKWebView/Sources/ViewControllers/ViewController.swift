@@ -14,7 +14,11 @@ class ViewController: UIViewController {
 
     @IBOutlet private weak var webViewContainer: UIView!
     @IBOutlet private weak var textField: UITextField!
-    @IBOutlet private weak var indicatorView: UIActivityIndicatorView!
+    @IBOutlet private weak var indicatorView: UIActivityIndicatorView! {
+        didSet {
+            indicatorView.hidesWhenStopped = true
+        }
+    }
     
     @IBOutlet private weak var bottomLabel: UILabel!
 
