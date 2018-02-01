@@ -9,7 +9,7 @@
 
 import Foundation
 
-// 複数計測する場合 (例: Webpageの読み込みなど)
+/// 複数計測する場合 (例: Webpageの読み込みなど)
 class Benchmarks {
     static let shared = Benchmarks()
     
@@ -28,7 +28,7 @@ class Benchmarks {
     
     func finish(key: String) -> String? {
         guard !key.isEmpty else { return nil }
-        guard let index = self.keys.index(of: key) else { return "Not Match loading Start URL and loading End URL. Plase reload this site" }
+        guard let index = self.keys.index(of: key) else { return "Not Match loading Start URL and loading End URL. Plase reload this site. Probably you were redirected." }
         let time = self.benchmarks[index].finishWithString()
         
         self.keys.remove(at: index)
@@ -64,7 +64,7 @@ class Benchmarks {
             let formatedElapsed = String(format: "%.3f", elapsed)
             // print("Benchmark: \(key), Elasped time: \(formatedElapsed)(s)")
             
-            let url = self.key.characters.count > 36 ?
+            let url = self.key.count > 36 ?
                 "\(self.key.prefix(35))..." : self.key
             return "URL: \(url)\nElasped time: \(formatedElapsed)(s)"
         }

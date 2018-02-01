@@ -10,17 +10,26 @@ import UIKit
 import WebKit
 
 class ViewController: UIViewController {
+
+
+    @IBOutlet private weak var webViewContainer: UIView!
+    @IBOutlet private weak var textField: UITextField!
+    @IBOutlet private weak var indicatorView: UIActivityIndicatorView!
     
-    var webView: WKWebView = WKWebView(frame: CGRect.zero)
-    @IBOutlet weak var webViewContainer: UIView!
-    @IBOutlet weak var textField: UITextField!
-    @IBOutlet weak var indicatorView: UIActivityIndicatorView!
-    
-    @IBOutlet weak var bottomLabel: UILabel!
-    
+    @IBOutlet private weak var bottomLabel: UILabel!
+
+    private var webView: WKWebView! {
+        didSet {
+            webView.uiDelegate = self
+            webView.navigationDelegate = self
+            webView.allowsBackForwardNavigationGestures = true
+            webView.translatesAutoresizingMaskIntoConstraints = false
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        initializeWebView()
+        setupWebView()
         webView.load(URLRequest(url: URL(string: "https://github.com/")!))
     }
     
@@ -43,13 +52,9 @@ class ViewController: UIViewController {
     }
     
     
-    private func initializeWebView() {
-        webView.uiDelegate = self
-        webView.navigationDelegate = self
-        webView.allowsBackForwardNavigationGestures = true
+    private func setupWebView() {
+        webView = WKWebView(frame: CGRect.zero)
         self.webViewContainer.addSubview(webView)
-        
-        webView.translatesAutoresizingMaskIntoConstraints = false
         self.webViewContainer.addConstraints([
             NSLayoutConstraint(item: webView, attribute: .top, relatedBy: .equal, toItem: self.webViewContainer, attribute: .top, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: webView, attribute: .left, relatedBy: .equal, toItem: self.webViewContainer, attribute: .left, multiplier: 1, constant: 0),
@@ -136,22 +141,3 @@ extension ViewController: UITextFieldDelegate {
     
 }
 
-// MARK: extension UIAlertController
-extension UIAlertController {
-    /// Create simple alert with OK, Cancel
-    static internal func makeSimpleAlert(_ title: String?, message: String?, okTitle: String?, okAction: ((UIAlertAction) -> Void)? ,cancelTitle: String?, cancelAction: ((UIAlertAction) -> Void)?) -> UIAlertController {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        // OK
-        if let okTitle = okTitle {
-            let okAction = UIAlertAction(title: okTitle, style: .default, handler: okAction)
-            alertController.addAction(okAction)
-        }
-        // Cancel
-        if let cancelTitle = cancelTitle {
-            let cancelAction = UIAlertAction(title: cancelTitle, style: .default, handler: cancelAction)
-            alertController.addAction(cancelAction)
-        }
-        
-        return alertController
-    }
-}
