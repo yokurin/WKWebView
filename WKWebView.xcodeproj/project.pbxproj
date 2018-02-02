@@ -172,8 +172,14 @@
 				TargetAttributes = {
 					AE878A271F8DBF43003B795C = {
 						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = H8DUS5PAH6;
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -355,9 +361,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = H8DUS5PAH6;
 				INFOPLIST_FILE = "$(SRCROOT)/WKWebView/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.yokurin.WKWebView;
+				PRODUCT_BUNDLE_IDENTIFIER = com.test.WKWebView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
@@ -368,9 +375,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = H8DUS5PAH6;
 				INFOPLIST_FILE = "$(SRCROOT)/WKWebView/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.yokurin.WKWebView;
+				PRODUCT_BUNDLE_IDENTIFIER = com.test.WKWebView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;

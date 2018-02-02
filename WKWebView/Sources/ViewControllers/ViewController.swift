@@ -8,6 +8,7 @@
 
 import UIKit
 import WebKit
+import MediaPlayer
 
 class ViewController: UIViewController {
 
@@ -35,6 +36,13 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         setupWebView()
         webView.load(URLRequest(url: URL(string: "https://github.com/")!))
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationDidEnterBackground, object: nil, queue: nil, using: enteredBackground)
+        MPRemoteCommandCenter.shared().playCommand.isEnabled = true
+        MPRemoteCommandCenter.shared().playCommand.addTarget { [weak self] (event) -> MPRemoteCommandHandlerStatus in
+            self?.playVideo()
+            return .success
+        }
+
     }
     
     @IBAction func onReloadButton(_ sender: UIBarButtonItem) {
@@ -43,7 +51,13 @@ class ViewController: UIViewController {
         }
         webView.reload()
     }
-    
+
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+        print("deinit")
+    }
+
+
     @IBAction func onTrashButton(_ sender: UIBarButtonItem) {
         let ac = UIAlertController(title: "Delete All Website Data", message: "DiskCache\nOfflineWebApplicationCache\nMemoryCache\nLocalStorage\nCookies\nSessionStorage\nIndexedDBDatabases\nWebSQLDatabases", preferredStyle: .alert)
         let ok = UIAlertAction(title: "OK", style: .default) { [weak self] (action) in
@@ -57,7 +71,10 @@ class ViewController: UIViewController {
     
     
     private func setupWebView() {
-        webView = WKWebView(frame: CGRect.zero)
+        let config = WKWebViewConfiguration()
+        config.allowsInlineMediaPlayback = true
+
+        webView = WKWebView(frame: CGRect.zero, configuration: config)
         self.webViewContainer.addSubview(webView)
         self.webViewContainer.addConstraints([
             NSLayoutConstraint(item: webView, attribute: .top, relatedBy: .equal, toItem: self.webViewContainer, attribute: .top, multiplier: 1, constant: 0),
@@ -86,6 +103,12 @@ class ViewController: UIViewController {
                 modifiedSince: Date(timeIntervalSince1970: 0),
                 completionHandler: {}
         )
+    }
+
+    func enteredBackground(notification: Notification) {
+        DispatchQueue.main.async { [weak self] in
+            self?.playVideo()
+        }
     }
 }
 
@@ -124,6 +147,8 @@ extension ViewController: WKUIDelegate, WKNavigationDelegate {
     func playVideo() {
         guard let js: String = Bundle.main.path(forResource: "PlayVideo", ofType: "js") else { return }
         webView.evaluateJavaScript(js, completionHandler: nil)
+
+        print("play video")
     }
 
     func pauseVideo() {
