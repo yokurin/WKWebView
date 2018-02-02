@@ -120,6 +120,16 @@ extension ViewController: WKUIDelegate, WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         indicatorView.stopAnimating()
     }
+
+    func playVideo() {
+        guard let js: String = Bundle.main.path(forResource: "PlayVideo", ofType: "js") else { return }
+        webView.evaluateJavaScript(js, completionHandler: nil)
+    }
+
+    func pauseVideo() {
+        guard let js: String = Bundle.main.path(forResource: "PauseVideo", ofType: "js") else { return }
+        webView.evaluateJavaScript(js, completionHandler: nil)
+    }
 }
 
 // MARK: UITextFieldDelegate

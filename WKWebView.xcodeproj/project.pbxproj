@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AE241C1B20242E3500602DD1 /* PauseVideo.js in Resources */ = {isa = PBXBuildFile; fileRef = AE241C1A20242E3500602DD1 /* PauseVideo.js */; };
 		AE4D15F22022D2E0008DC1D9 /* UIAlertControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE4D15F12022D2E0008DC1D9 /* UIAlertControllerExtension.swift */; };
+		AE4D15F820242820008DC1D9 /* PlayVideo.js in Resources */ = {isa = PBXBuildFile; fileRef = AE4D15F720242820008DC1D9 /* PlayVideo.js */; };
 		AE878A2C1F8DBF43003B795C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE878A2B1F8DBF43003B795C /* AppDelegate.swift */; };
 		AE878A2E1F8DBF43003B795C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE878A2D1F8DBF43003B795C /* ViewController.swift */; };
 		AE878A311F8DBF43003B795C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AE878A2F1F8DBF43003B795C /* Main.storyboard */; };
@@ -17,7 +19,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AE241C1A20242E3500602DD1 /* PauseVideo.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = PauseVideo.js; sourceTree = "<group>"; };
 		AE4D15F12022D2E0008DC1D9 /* UIAlertControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertControllerExtension.swift; sourceTree = "<group>"; };
+		AE4D15F720242820008DC1D9 /* PlayVideo.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = PlayVideo.js; sourceTree = "<group>"; };
 		AE878A281F8DBF43003B795C /* WKWebView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WKWebView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE878A2B1F8DBF43003B795C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AE878A2D1F8DBF43003B795C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -45,6 +49,7 @@
 				AE4D15F02022D2BE008DC1D9 /* Utils */,
 				AE4D15EF2022D2B8008DC1D9 /* Extensions */,
 				AE4D15F32022D3D4008DC1D9 /* ViewControllers */,
+				AE4D15F5202427B6008DC1D9 /* WebViewSources */,
 				AE4D15EE2022D2AA008DC1D9 /* Storyboards */,
 				AE878A2B1F8DBF43003B795C /* AppDelegate.swift */,
 			);
@@ -91,6 +96,23 @@
 				AE878A2D1F8DBF43003B795C /* ViewController.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		AE4D15F5202427B6008DC1D9 /* WebViewSources */ = {
+			isa = PBXGroup;
+			children = (
+				AE4D15F6202427F2008DC1D9 /* Javascripts */,
+			);
+			path = WebViewSources;
+			sourceTree = "<group>";
+		};
+		AE4D15F6202427F2008DC1D9 /* Javascripts */ = {
+			isa = PBXGroup;
+			children = (
+				AE4D15F720242820008DC1D9 /* PlayVideo.js */,
+				AE241C1A20242E3500602DD1 /* PauseVideo.js */,
+			);
+			path = Javascripts;
 			sourceTree = "<group>";
 		};
 		AE878A1F1F8DBF43003B795C = {
@@ -180,6 +202,8 @@
 			files = (
 				AE878A361F8DBF43003B795C /* LaunchScreen.storyboard in Resources */,
 				AE878A331F8DBF43003B795C /* Assets.xcassets in Resources */,
+				AE4D15F820242820008DC1D9 /* PlayVideo.js in Resources */,
+				AE241C1B20242E3500602DD1 /* PauseVideo.js in Resources */,
 				AE878A311F8DBF43003B795C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
