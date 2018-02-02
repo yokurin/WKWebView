@@ -36,13 +36,32 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         setupWebView()
         webView.load(URLRequest(url: URL(string: "https://github.com/")!))
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationDidEnterBackground, object: nil, queue: nil, using: enteredBackground)
-        MPRemoteCommandCenter.shared().playCommand.isEnabled = true
-        MPRemoteCommandCenter.shared().playCommand.addTarget { [weak self] (event) -> MPRemoteCommandHandlerStatus in
-            self?.playVideo()
-            return .success
+        
+        setupAudioSession()
+        setupRemoteControl()
+        
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationDidEnterBackground, object: nil, queue: nil, using: didEnterBackground)
+    }
+    
+    override func remoteControlReceived(with event: UIEvent?) {
+        guard let e = event else { return }
+        switch e.subtype {
+        case .remoteControlPlay:
+            print("remoteControlReceived")
+            playVideo()
+        default:
+            return
         }
-        UIApplication.shared.beginReceivingRemoteControlEvents()
+    }
+    
+    deinit {
+        UIApplication.shared.endReceivingRemoteControlEvents()
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+        print("deinit")
+    }
+    
+    internal func didEnterBackground(notification: Notification) {
+        playVideo()
     }
     
     @IBAction func onReloadButton(_ sender: UIBarButtonItem) {
@@ -51,14 +70,7 @@ class ViewController: UIViewController {
         }
         webView.reload()
     }
-
-    deinit {
-        UIApplication.shared.endReceivingRemoteControlEvents()
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
-        print("deinit")
-    }
-
-
+    
     @IBAction func onTrashButton(_ sender: UIBarButtonItem) {
         let ac = UIAlertController(title: "Delete All Website Data", message: "DiskCache\nOfflineWebApplicationCache\nMemoryCache\nLocalStorage\nCookies\nSessionStorage\nIndexedDBDatabases\nWebSQLDatabases", preferredStyle: .alert)
         let ok = UIAlertAction(title: "OK", style: .default) { [weak self] (action) in
@@ -69,7 +81,6 @@ class ViewController: UIViewController {
         ac.addAction(cancel)
         self.present(ac, animated: true, completion: nil)
     }
-    
     
     private func setupWebView() {
         let config = WKWebViewConfiguration()
@@ -106,11 +117,27 @@ class ViewController: UIViewController {
         )
     }
 
-    func enteredBackground(notification: Notification) {
-        DispatchQueue.main.async { [weak self] in
-            self?.playVideo()
+    
+    private func setupAudioSession() {
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            print(error)
         }
     }
+    
+    private func setupRemoteControl() {
+        MPRemoteCommandCenter.shared().playCommand.isEnabled = true
+        MPRemoteCommandCenter.shared().playCommand.addTarget { [weak self] (event) -> MPRemoteCommandHandlerStatus in
+            self?.playVideo()
+            print("MPRemoteCommandCenter playCommand")
+            return .success
+        }
+        UIApplication.shared.beginReceivingRemoteControlEvents()
+        self.becomeFirstResponder()
+    }
+    
 }
 
 // MARK: WebViewDelegate
@@ -148,13 +175,13 @@ extension ViewController: WKUIDelegate, WKNavigationDelegate {
     func playVideo() {
         guard let js: String = Bundle.main.path(forResource: "PlayVideo", ofType: "js") else { return }
         webView.evaluateJavaScript(js, completionHandler: nil)
-
         print("play video")
     }
 
     func pauseVideo() {
         guard let js: String = Bundle.main.path(forResource: "PauseVideo", ofType: "js") else { return }
         webView.evaluateJavaScript(js, completionHandler: nil)
+        print("pause video")
     }
 }
 
