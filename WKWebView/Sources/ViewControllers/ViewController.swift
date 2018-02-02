@@ -42,7 +42,7 @@ class ViewController: UIViewController {
             self?.playVideo()
             return .success
         }
-
+        UIApplication.shared.beginReceivingRemoteControlEvents()
     }
     
     @IBAction func onReloadButton(_ sender: UIBarButtonItem) {
@@ -53,6 +53,7 @@ class ViewController: UIViewController {
     }
 
     deinit {
+        UIApplication.shared.endReceivingRemoteControlEvents()
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
         print("deinit")
     }
