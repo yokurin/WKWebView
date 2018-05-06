@@ -20,8 +20,8 @@ You can check pure WKWebView and loading time of website.
     - Swift3
 
 - develop or feature/xcode9
-    - Xcode9
-    - Swift4
+    - Xcode9.3
+    - Swift4.1
 
 ## Install
 ```
