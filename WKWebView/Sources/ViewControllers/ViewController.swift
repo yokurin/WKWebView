@@ -57,7 +57,8 @@ class ViewController: UIViewController {
     
     
     private func setupWebView() {
-        webView = WKWebView(frame: CGRect.zero)
+        let configuration = WKWebViewConfiguration()
+        webView = WKWebView(frame: CGRect.zero, configuration: configuration)
         self.webViewContainer.addSubview(webView)
         self.webViewContainer.addConstraints([
             NSLayoutConstraint(item: webView, attribute: .top, relatedBy: .equal, toItem: self.webViewContainer, attribute: .top, multiplier: 1, constant: 0),
@@ -120,11 +121,21 @@ extension ViewController: WKUIDelegate, WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         indicatorView.stopAnimating()
     }
+
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        print(error)
+    }
+
+//    func webView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+//        let cred = URLCredential(trust: challenge.protectionSpace.serverTrust!)
+//        completionHandler(.useCredential, cred)
+//    }
 }
+
 
 // MARK: UITextFieldDelegate
 extension ViewController: UITextFieldDelegate {
-    
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         guard let text = textField.text, !text.isEmpty else {
             let ac = UIAlertController.makeSimpleAlert("TextField is empty", message: nil, okTitle: "OK", okAction: nil, cancelTitle: nil, cancelAction: nil)
